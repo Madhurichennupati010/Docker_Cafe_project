@@ -19,8 +19,6 @@ It runs inside a Docker container using the Nginx web server.
 portfolio-website/
 │
 ├── index.html
-├── about.html
-├── contact.html
 ├── styles.css
 └── Dockerfile
 ```
@@ -82,9 +80,7 @@ http://localhost:8081
 
 Pages:
 
-* Home → `/index.html`
-* About → `/about.html`
-* Contact → `/contact.html`
+* Home → `/index.html
 
 ---
 
