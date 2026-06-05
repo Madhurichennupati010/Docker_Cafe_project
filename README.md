@@ -2,13 +2,12 @@
 
 ## Overview
 
-This project demonstrates how to containerize and deploy a simple portfolio website using **Docker and Nginx**.
+This project demonstrates how to containerize and deploy a simple portfolio website using **Docker **.
 
 The website contains:
 
 * Home Page
-* About Page
-* Contact Page
+
 
 It runs inside a Docker container using the Nginx web server.
 
