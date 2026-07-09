@@ -21,7 +21,7 @@ spec:
 
       - name: cafe
 
-        image: madhu934652/cafe-website:v1
+        image: madhu934652/cafe-website:latest
 
         imagePullPolicy: Always
 
