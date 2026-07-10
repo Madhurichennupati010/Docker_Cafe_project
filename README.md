@@ -1,170 +1,397 @@
-# Portfolio Website Deployment Using Docker
+# ☕ Cafe Website - End-to-End DevOps CI/CD Project using GitHub Actions, Docker, Kubernetes (Minikube) & AWS EC2
 
-## Overview
+# 📌 Project Overview
 
-This project demonstrates how to containerize and deploy a simple portfolio website using **Docker **.
+This project demonstrates a complete **End-to-End DevOps CI/CD Pipeline** for deploying a static Cafe Website using modern DevOps tools.
 
-The website contains:
+The website is containerized using Docker, stored in Docker Hub, automatically deployed to a Kubernetes cluster running on **Minikube inside an AWS EC2 instance**, and updated through a **GitHub Actions Self-Hosted Runner** after every code push.
 
-* Home Page
+The project also demonstrates Kubernetes features such as:
 
-
-It runs inside a Docker container using the Nginx web server.
+- Continuous Deployment
+- Rolling Updates
+- Auto Healing
+- Horizontal Pod Autoscaling (HPA)
+- Kubernetes Health Checks
+- Self-hosted GitHub Actions Runner
 
 ---
 
-## Project Structure
+# 🏗 Architecture
 
-```text id="p9kq7x"
-portfolio-website/
+```
+Developer
+      │
+      ▼
+GitHub Repository
+      │
+      ▼
+GitHub Actions Workflow
+      │
+      ▼
+Build Docker Image
+      │
+      ▼
+Push Image to Docker Hub
+      │
+      ▼
+AWS EC2 Self-Hosted Runner
+      │
+      ▼
+Minikube Kubernetes Cluster
+      │
+      ▼
+Rolling Deployment
+      │
+      ▼
+Cafe Website
+```
+
+---
+
+# 🛠 Technologies Used
+
+| Technology | Purpose |
+|------------|----------|
+| Git | Version Control |
+| GitHub | Source Code Repository |
+| GitHub Actions | Continuous Integration & Deployment |
+| Docker | Containerization |
+| Docker Hub | Image Registry |
+| AWS EC2 | Deployment Server |
+| Minikube | Local Kubernetes Cluster |
+| Kubernetes | Container Orchestration |
+| kubectl | Kubernetes CLI |
+| Linux | Operating System |
+
+---
+
+# 📂 Project Structure
+
+```
+Docker_Cafe_project/
+
 │
+├── .github/
+│     └── workflows/
+│            deploy.yml
+│
+├── K8s/
+│     ├── deployment.yaml
+│     ├── service.yaml
+│     ├── hpa.yaml
+│
+├── Dockerfile
 ├── index.html
 ├── styles.css
-└── Dockerfile
+├── README.md
 ```
 
 ---
 
-## Features
+# 🚀 Features
 
-* Simple multi-page portfolio website
-* Built using HTML and CSS
-* Hosted using Nginx inside a Docker container
-* Portable and lightweight deployment
-* Runs on any system with Docker installed
-
----
-
-## Dockerfile
-
-```dockerfile id="x1m9tq"
-FROM nginx:latest
-
-# Copy website files to Nginx default directory
-COPY . /usr/share/nginx/html
-
-# Expose port 80
-EXPOSE 80
-```
+- Dockerized Cafe Website
+- Hosted Docker Image on Docker Hub
+- Kubernetes Deployment
+- NodePort Service
+- GitHub Actions CI/CD
+- Self Hosted Runner
+- Rolling Updates
+- Auto Healing
+- Horizontal Pod Autoscaling
+- Health Checks
+- AWS Deployment
 
 ---
 
-## How to Build Docker Image
+# ⚙ CI/CD Pipeline
 
-Run this command inside the project folder:
+Whenever code is pushed to the **main** branch:
 
-```bash id="b7kq1a"
-docker build -t portfolio-website:v1 .
-```
-
----
-
-## How to Run Docker Container
-
-```bash id="m4p9xz"
-docker run -d \
---name portfolio-container \
--p 8081:80 \
-portfolio-website:v1
-```
+1. GitHub Actions starts automatically.
+2. Repository is cloned.
+3. Docker Image is built.
+4. Image is pushed to Docker Hub.
+5. GitHub Self Hosted Runner receives the job.
+6. Kubernetes Deployment image is updated.
+7. Rolling update begins.
+8. Deployment status is verified.
 
 ---
 
-## Access Website
+# 🔄 GitHub Actions Workflow
 
-Open browser:
-
-```text id="z2kq7m"
-http://localhost:8081
 ```
+Developer Push
 
-Pages:
-
-* Home → `/index.html
-
----
-
-## Docker Commands Used
-
-### List Images
-
-```bash id="k9p1wq"
-docker images
-```
-
-### List Running Containers
-
-```bash id="t7xq2m"
-docker ps
-```
-
-### Stop Container
-
-```bash id="v3kq8n"
-docker stop portfolio-container
-```
-
-### Remove Container
-
-```bash id="r6m1pq"
-docker rm portfolio-container
-```
-
-### Remove Image
-
-```bash id="w8xq3t"
-docker rmi portfolio-website:v1
-```
-
----
-
-## Deployment Flow
-
-```text id="d9kq2m"
-HTML/CSS Files
       ↓
-Dockerfile
+
+GitHub Actions
+
       ↓
-Docker Build Image
+
+Build Docker Image
+
       ↓
-Docker Run Container
+
+Push Image to Docker Hub
+
       ↓
-Nginx Server
+
+Connect to EC2 Self Hosted Runner
+
       ↓
-Browser Access (localhost:8080)
+
+kubectl set image
+
+      ↓
+
+Rolling Update
+
+      ↓
+
+Deployment Verification
 ```
 
 ---
 
-## Technologies Used
+# 🐳 Docker Image
 
-* HTML
-* CSS
-* Docker
-* Nginx
-
----
-
-## Learning Outcomes
-
-After completing this project, you will understand:
-
-* Docker image creation
-* Container lifecycle
-* Port mapping
-* Static website hosting using Nginx
-* Basic DevOps containerization workflow
+```
+madhu934652/cafe-website
+```
 
 ---
 
-## Author
+# ☸ Kubernetes Resources
 
-**Madhuri**
+### Deployment
 
-Learning DevOps fundamentals:
+- Replica Management
+- Rolling Updates
+- Auto Healing
+- Health Checks
 
-* Linux
-* Git
-* Docker
-* AWS basics
-* CI/CD concepts
+---
+
+### Service
+
+```
+Type : NodePort
+```
+
+Used for exposing the application outside the Kubernetes Cluster.
+
+---
+
+### Horizontal Pod Autoscaler
+
+Configured using
+
+```
+autoscaling/v2
+```
+
+Features
+
+- Minimum Replicas
+- Maximum Replicas
+- CPU Utilization based scaling
+
+---
+
+# ❤️ Kubernetes Auto Healing
+
+Auto Healing is implemented using:
+
+- Deployment Controller
+- ReplicaSet
+- Liveness Probe
+- Readiness Probe
+
+### Demonstration
+
+Delete any running pod
+
+```
+kubectl delete pod <pod-name>
+```
+
+Kubernetes automatically creates a new Pod to maintain the desired replica count.
+
+---
+
+# 📈 Horizontal Pod Autoscaling
+
+Metrics Server is enabled inside Minikube.
+
+HPA automatically increases or decreases the number of Pods based on CPU utilization.
+
+Example
+
+```
+kubectl get hpa
+```
+
+Generate Load
+
+```
+kubectl run load-generator \
+--image=busybox \
+--restart=Never \
+-it -- /bin/sh
+```
+
+```
+while true
+do
+wget -q -O- http://cafe-service
+done
+```
+
+Watch Scaling
+
+```
+kubectl get hpa -w
+```
+
+```
+kubectl get pods -w
+```
+
+---
+
+# ❤️ Auto Healing Demonstration
+
+Open Terminal 1
+
+```
+kubectl get pods -w
+```
+
+Open Terminal 2
+
+```
+kubectl delete pod <pod-name>
+```
+
+Result
+
+- Old Pod Terminated
+- New Pod Created Automatically
+- Application Remains Available
+
+---
+
+# 🚀 Deployment Steps
+
+Clone Repository
+
+```
+git clone <repository-url>
+```
+
+Go to Project
+
+```
+cd Docker_Cafe_project
+```
+
+Deploy Kubernetes Resources
+
+```
+kubectl apply -f K8s/
+```
+
+Verify
+
+```
+kubectl get all
+```
+
+---
+
+# 📊 Verify Deployment
+
+Pods
+
+```
+kubectl get pods
+```
+
+Deployment
+
+```
+kubectl get deployments
+```
+
+Service
+
+```
+kubectl get svc
+```
+
+HPA
+
+```
+kubectl get hpa
+```
+
+---
+
+# 📷 Screenshots added in the pdf file
+
+- GitHub Repository
+- GitHub Actions Success
+- Docker Hub Image
+- Kubernetes Pods
+- Kubernetes Deployment
+- Kubernetes Service
+- Horizontal Pod Autoscaler
+- Auto Healing Demo
+- Website Running
+- AWS EC2
+- Self Hosted Runner
+
+---
+
+# 🎯 Project Highlights
+
+✅ Docker Containerization
+
+✅ GitHub Actions CI/CD
+
+✅ Docker Hub Integration
+
+✅ AWS EC2 Deployment
+
+✅ Kubernetes (Minikube)
+
+✅ Rolling Updates
+
+✅ Auto Healing
+
+✅ Horizontal Pod Autoscaling
+
+✅ Self Hosted GitHub Runner
+
+---
+
+# 👨‍💻 Author
+
+**Chennupati Madhuri**
+
+Cloud & DevOps Engineer
+
+Skills
+
+- AWS
+- Docker
+- Kubernetes
+- GitHub Actions
+- Jenkins
+- Linux
+- Terraform
+- CI/CD
+- DevOps
